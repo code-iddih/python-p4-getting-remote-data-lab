@@ -7,7 +7,24 @@ class GetRequester:
         self.url = url
 
     def get_response_body(self):
-        pass
+
+        response = requests.get(self.url)
+
+        if response.status_code == 200:
+            return response.content 
+        else:
+            response.raise_for_status()
+
 
     def load_json(self):
-        pass
+        
+        response_body = self.get_response_body()
+
+        return json.loads(response_body) 
+
+
+if __name__ == "__main__":  
+    get_requester = GetRequester('https://learn-co-curriculum.github.io/json-site-example/endpoints/people.json')
+    sample = get_requester.load_json()
+
+    print(sample)
